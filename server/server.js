@@ -12,9 +12,23 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.static(publicPath));
 
+//fires on connection with client
 io.on('connection', (socket) => {
     console.log('new user connected');
 
+    //creates event - first argument must match the client side argument
+    socket.emit('newMessage', {
+        text: 'Hello this is a message from Greg!',
+        sentFrom: 'Greg',
+        sentAt: '3:00 p.m.'
+    });
+
+    //listens for event from client
+    socket.on('createMessage', (message) => {
+        console.log('createMessage', message);
+    });
+
+    //fires on disconnection from client
     socket.on('disconnect', () => {
         console.log('disconnected from user');
     })
