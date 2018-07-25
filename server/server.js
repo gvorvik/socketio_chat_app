@@ -23,11 +23,13 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user in chat room'));
 
     //listens for event from client
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
 
         //emits event to every connection
         io.emit('newMessage', generateMessage(message.from, message.text));
+
+        callback('This is from the server');
 
     });
 
