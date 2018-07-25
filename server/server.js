@@ -16,16 +16,15 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('new user connected');
 
-    //creates event - first argument must match the client side argument
-    socket.emit('newMessage', {
-        text: 'Hello this is a message from Greg!',
-        sentFrom: 'Greg',
-        sentAt: '3:00 p.m.'
-    });
-
     //listens for event from client
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
+        //emits event to every connection
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        })
     });
 
     //fires on disconnection from client
