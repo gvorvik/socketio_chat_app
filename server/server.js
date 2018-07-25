@@ -16,15 +16,30 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('new user connected');
 
+    socket.emit('newMessage', {
+        from: 'Admin',
+        text: 'Welcome to the chat room',
+        createdAt: new Date().getTime()
+    });
+
+    //sends event to everyone but this socket
+    socket.broadcast.emit('newMessage', {
+        from: 'Admin',
+        text: 'New user in chat room',
+        createdAt: new Date().getTime()
+    });
+
     //listens for event from client
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
+
         //emits event to every connection
         io.emit('newMessage', {
             from: message.from,
             text: message.text,
             createdAt: new Date().getTime()
-        })
+        });
+
     });
 
     //fires on disconnection from client
