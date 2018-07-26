@@ -1,0 +1,4 @@
+io.emit - emits to all users
+socket.broadcast.emit - emits to all users but the one sending
+socket.emit - emits to only the one user
+io.to().emit - emits to all users specified in the to method
