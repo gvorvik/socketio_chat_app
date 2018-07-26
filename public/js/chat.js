@@ -35,6 +35,16 @@ socket.on('disconnect', function() {
     console.log('server disconnected');
 });
 
+socket.on('updateUserList', function(users) {
+    let ol = $('<ol></ol>');
+    users.forEach(function(user) {
+        console.log(user);
+        ol.append($(`<li>${user}</li>`));
+    });
+
+    $('#users').html(ol);
+});
+
 socket.on('newMessage', function(message) {
     let template = $('#message-template').html();
     const formattedTime = moment(message.createdAt).format('h:mm a');
