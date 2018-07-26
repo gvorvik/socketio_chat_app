@@ -12,11 +12,13 @@ socket.on('disconnect', function() {
 });
 
 socket.on('newMessage', function(message) {
-    $('#messages').append(`<li>From ${message.from}: ${message.text}</li>`);
+    const formattedTime = moment(message.createdAt).format('h:mm a');
+    $('#messages').append(`<li>From ${message.from} ${formattedTime}: ${message.text}</li>`);
 });
 
 socket.on('newLocationMessage', function(message) {
-    $('#messages').append(`<li>From ${message.from}: <a href=${message.url} target=_blank>My Location</a></li>`);
+    const formattedTime = moment(message.createdAt).format('h:mm a');
+    $('#messages').append(`<li>From ${message.from} ${formattedTime}: <a href=${message.url} target=_blank>My Location</a></li>`);
 })
 
 
