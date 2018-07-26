@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
         //emits event to every connection
         io.emit('newMessage', generateMessage(message.from, message.text));
 
-        callback('This is from the server');
+        callback();
 
     });
 
